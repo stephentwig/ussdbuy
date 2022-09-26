@@ -28,4 +28,4 @@ Route::put('customer/contacts/{id}', 'ApiController@updateCustomerContact');
 
 Route::delete('customer/contacts/{id}','ApiController@deleteCustomerContact');
 
-Route::put('customer/contacts/blacklist/{id}', 'ApiController@blacklistCustomerContact');
+Route::patch('customer/contacts/blacklist/{id}', 'ApiController@blacklistCustomerContact');
