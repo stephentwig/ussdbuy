@@ -22,6 +22,8 @@ Route::get('customer/contacts', 'ApiController@getAllCustomerContacts');
 
 Route::get('customer/contacts/{id}', 'ApiController@getCustomerContact');
 
+Route::get('customer/contacts/isblacklisted/{contact_number}', 'ApiController@is_blacklisted');
+
 Route::post('customer/contacts', 'ApiController@createCustomerContact');
 
 Route::put('customer/contacts/{id}', 'ApiController@updateCustomerContact');
