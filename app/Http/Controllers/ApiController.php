@@ -57,11 +57,11 @@ class ApiController extends Controller
             $customer->save();
 
             return response()->json([
-                "message" => "customer number records updated successfully"
+                "message" => "customer number records updated successfully."
             ], 200);
         } else {
             return response()->json([
-                "message" => "customer contact not found"
+                "message" => "customer contact not found."
             ], 404);
 
         }
@@ -74,12 +74,12 @@ class ApiController extends Controller
             $customer->delete();
 
             return response()->json([
-                "message" => "records deleted"
+                "message" => "records deleted."
             ], 202);
         } else {
 
             return response()->json([
-                "message" => "customer contact  not found"
+                "message" => "customer contact  not found."
 
             ], 404);
         }
@@ -94,14 +94,13 @@ class ApiController extends Controller
         if (Customer::where('id', $id)->exists()) {
             $customer = Customer::find($id);
 
-            $customer->contact_number = is_null($request->contact_number) ? $customer->contact_number : $request->contact_number;
-            $customer->status_code = is_null($request->status_code) ? $customer->status_code : $request->status_code;
+
             $customer->is_whitelisted = 0;
 
             $customer->save();
 
             return response()->json([
-                "message" => "customer number records updated successfully"
+                "message" => "customer number blacklisted"
             ], 200);
         } else {
             return response()->json([
