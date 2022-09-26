@@ -44,6 +44,29 @@ class ApiController extends Controller
         }
     }
 
+    public function is_blacklisted($contact_number) {
+        // logic to get a student record goes here
+        if (Customer::where('contact_number', $contact_number)->exists()) {
+
+            $customer = Customer::where('contact_number', $contact_number)->get()->first();
+            
+            
+            return response()->json([
+                "contact_number" => $customer->contact_number,
+                "status_code" => $customer->status_code,
+                "message" => $customer->is_whitelisted == 1 ? "active" : "blocked"
+            ], 200);
+
+
+        } else {
+
+            return response()->json([
+                "message" => "customer number not found."
+            ], 404);
+
+        }
+    }
+
     public function updateCustomerContact(Request $request, $id) {
         // logic to update a student record goes here
         if (Customer::where('id', $id)->exists()) {
