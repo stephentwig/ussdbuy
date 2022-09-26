@@ -16,3 +16,16 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::get('customer/contacts', 'ApiController@getAllCustomerContacts');
+
+Route::get('customer/contacts/{id}', 'ApiController@getCustomerContact');
+
+Route::post('customer/contacts', 'ApiController@createCustomerContact');
+
+Route::put('customer/contacts/{id}', 'ApiController@updateCustomerContact');
+
+Route::delete('customer/contacts/{id}','ApiController@deleteCustomerContact');
+
+Route::put('customer/contacts/blacklist/{id}', 'ApiController@blacklistCustomerContact');
