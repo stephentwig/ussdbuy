@@ -18,14 +18,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::get('customer/contacts', 'ApiController@getAllCustomerContacts');
+Route::get('customer/contacts', 'ApiController@getAllCustomerContacts')->name('getAllCustomerContacts');
 
-Route::get('customer/contacts/{id}', 'ApiController@getCustomerContact');
+Route::get('customer/contacts/{id}', 'ApiController@getCustomerContact')->name('getCustomerContact');
 
-Route::post('customer/contacts', 'ApiController@createCustomerContact');
+Route::get('customer/contacts/isblacklisted/{contact_number}', 'ApiController@is_blacklisted')->name('is_blacklisted');
 
-Route::put('customer/contacts/{id}', 'ApiController@updateCustomerContact');
+Route::post('customer/contacts', 'ApiController@createCustomerContact')->name('createCustomerContact');
 
-Route::delete('customer/contacts/{id}','ApiController@deleteCustomerContact');
+Route::put('customer/contacts/{id}', 'ApiController@updateCustomerContact')->name('updateCustomerContact');
 
-Route::put('customer/contacts/blacklist/{id}', 'ApiController@blacklistCustomerContact');
+Route::delete('customer/contacts/{id}','ApiController@deleteCustomerContact')->name('deleteCustomerContact');
+
+Route::patch('customer/contacts/blacklist/{id}', 'ApiController@blacklistCustomerContact')->name('blacklistCustomerContact');
