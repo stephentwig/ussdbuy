@@ -7,13 +7,13 @@ use Illuminate\Http\Request;
 class ApiController extends Controller
 {
     public function getAllCustomerContacts() {
-        // logic to get all students goes here
+       
         $customer = Customer::get();
         return response($customer, 200);
     }
 
     public function createCustomerContact(Request $request) {
-        // logic to create a student record goes here
+       
 
         $customer = new Customer;
 
@@ -29,7 +29,7 @@ class ApiController extends Controller
     }
 
     public function getCustomerContact($id) {
-        // logic to get a student record goes here
+       
         if (Customer::where('id', $id)->exists()) {
 
             $customer = Customer::where('id', $id)->get();
@@ -44,8 +44,31 @@ class ApiController extends Controller
         }
     }
 
+    public function is_blacklisted($contact_number) {
+       
+        if (Customer::where('contact_number', $contact_number)->exists()) {
+
+            $customer = Customer::where('contact_number', $contact_number)->get()->first();
+            
+            
+            return response()->json([
+                "contact_number" => $customer->contact_number,
+                "status_code" => $customer->status_code,
+                "message" => $customer->is_whitelisted == 1 ? "active" : "blocked"
+            ], 200);
+
+
+        } else {
+
+            return response()->json([
+                "message" => "customer number not found."
+            ], 404);
+
+        }
+    }
+
     public function updateCustomerContact(Request $request, $id) {
-        // logic to update a student record goes here
+        
         if (Customer::where('id', $id)->exists()) {
 
             $customer = Customer::find($id);
@@ -57,29 +80,29 @@ class ApiController extends Controller
             $customer->save();
 
             return response()->json([
-                "message" => "customer number records updated successfully"
+                "message" => "customer number records updated successfully."
             ], 200);
         } else {
             return response()->json([
-                "message" => "customer contact not found"
+                "message" => "customer contact not found."
             ], 404);
 
         }
     }
 
     public function deleteCustomerContact ($id) {
-        // logic to delete a student record goes here
+       
         if(Customer::where('id', $id)->exists()) {
             $customer = Customer::find($id);
             $customer->delete();
 
             return response()->json([
-                "message" => "records deleted"
+                "message" => "records deleted."
             ], 202);
         } else {
 
             return response()->json([
-                "message" => "customer contact  not found"
+                "message" => "customer contact  not found."
 
             ], 404);
         }
@@ -90,22 +113,21 @@ class ApiController extends Controller
 
 
     public function blacklistCustomerContact(Request $request, $id) {
-        // logic to update a student record goes here
+        
         if (Customer::where('id', $id)->exists()) {
             $customer = Customer::find($id);
 
-            $customer->contact_number = is_null($request->contact_number) ? $customer->contact_number : $request->contact_number;
-            $customer->status_code = is_null($request->status_code) ? $customer->status_code : $request->status_code;
+
             $customer->is_whitelisted = 0;
 
             $customer->save();
 
             return response()->json([
-                "message" => "customer number records updated successfully"
+                "message" => "customer number blacklisted."
             ], 200);
         } else {
             return response()->json([
-                "message" => "customer contact not found"
+                "message" => "customer contact not found."
             ], 404);
 
         }
